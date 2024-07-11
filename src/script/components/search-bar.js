@@ -58,7 +58,7 @@ class SearchBar extends HTMLElement {
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <form id="searchForm" class="search-form">
             <div class="input-group mb-3">
-                <input id="name" name="name" type="search" class="form-control" placeholder="Search..">
+                <input id="name" name="search" type="search" class="form-control" placeholder="Search.." autocomplete="on">
                 <button class="btn btn-outline-secondary">Search</button>
             </div>
         </form>
