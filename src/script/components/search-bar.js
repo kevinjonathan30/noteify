@@ -31,7 +31,7 @@ class SearchBar extends HTMLElement {
     }
 
     _onFormSubmit(event, searchBarInstance) {
-        event.preventDefault();  // Prevent form submission
+        event.preventDefault();  
 
         const query = this._shadowRoot.querySelector('input#name').value;
         searchBarInstance.dispatchEvent(new CustomEvent('submit', { detail: { query }, bubbles: true }));
@@ -54,7 +54,8 @@ class SearchBar extends HTMLElement {
         this._emptyContent();
 
         this._shadowRoot.innerHTML += `
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <form id="searchForm" class="search-form">
             <div class="input-group mb-3">
                 <input id="name" name="name" type="search" class="form-control" placeholder="Search..">

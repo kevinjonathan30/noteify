@@ -13,7 +13,13 @@ html {
     gap: 16px;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 600px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 992px) {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr;
     }

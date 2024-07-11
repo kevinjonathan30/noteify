@@ -12,9 +12,19 @@ class NoteifyCard extends HTMLElement {
         this.render();
     }
 
+    getRandomColor() {
+        const getRandomValue = () => Math.floor(Math.random() * 196);
+
+        const r = getRandomValue().toString(16).padStart(2, '0');
+        const g = getRandomValue().toString(16).padStart(2, '0');
+        const b = getRandomValue().toString(16).padStart(2, '0');
+
+        return `#${r}${g}${b}`;
+    }
+
     render() {
         this.innerHTML = `
-        <div class="card">
+        <div class="card" style="border: 1px solid ${this.getRandomColor()};">
             <div class="card-body">
                 <h5 class="card-title">${this._title}</h5>
                 <p class="card-text">${this._body}</p>

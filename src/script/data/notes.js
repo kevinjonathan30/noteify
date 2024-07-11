@@ -111,6 +111,22 @@ class Notes {
         return notes;
     }
 
+    static insertNote(note) {
+        const newNoteId = `notes-${Date.now()}`;
+
+        const newNote = {
+            id: newNoteId,
+            title: note.title,
+            body: note.body,
+            createdAt: new Date().toISOString(),
+            archived: false,
+        };
+
+        notes.push(newNote);
+
+        return newNote;
+    }
+
     static searchNote(query) {
         return notes.filter((note) => {
             const loweredCaseNoteTitle = (note.title || '-').toLowerCase();
