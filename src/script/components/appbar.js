@@ -14,5 +14,4 @@ class AppBar extends HTMLElement {
   }
 }
 
-customElements.define('noteify-appbar', AppBar);
-
+customElements.define("noteify-appbar", AppBar);

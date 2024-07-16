@@ -1,67 +1,85 @@
 class NoteModal extends HTMLElement {
-    _shadowRoot = null;
+  _shadowRoot = null;
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this._shadowRoot = this.attachShadow({ mode: 'open' });
+    this._shadowRoot = this.attachShadow({ mode: "open" });
 
-        this.render();
+    this.render();
+  }
+
+  connectedCallback() {
+    this.modal = new bootstrap.Modal(
+      this._shadowRoot.getElementById("noteModal"),
+    );
+
+    this._shadowRoot
+      .querySelector("#openModalBtn")
+      .addEventListener("click", () => {
+        this.modal.show();
+      });
+
+    this._shadowRoot
+      .querySelector("#noteForm")
+      .addEventListener("submit", this._onSubmit.bind(this));
+
+    const titleInput = this._shadowRoot.getElementById("noteTitle");
+    const bodyInput = this._shadowRoot.getElementById("noteBody");
+
+    titleInput.addEventListener(
+      "input",
+      this._validateInput.bind(this, titleInput),
+    );
+    bodyInput.addEventListener(
+      "input",
+      this._validateInput.bind(this, bodyInput),
+    );
+  }
+
+  disconnectedCallback() {
+    this._shadowRoot
+      .querySelector("#openModalBtn")
+      .removeEventListener("click", () => {
+        this.modal.show();
+      });
+    this._shadowRoot
+      .querySelector("#noteForm")
+      .removeEventListener("submit", this._onSubmit.bind(this));
+  }
+
+  _onSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const title = formData.get("title");
+    const body = formData.get("body");
+
+    this.dispatchEvent(
+      new CustomEvent("note-added", {
+        detail: { title, body },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+
+    event.target.reset();
+    this.modal.hide();
+  }
+
+  _validateInput(inputElement) {
+    const value = inputElement.value.trim();
+    const errorElement = inputElement.nextElementSibling;
+
+    if (value === "") {
+      errorElement.textContent = "This field is required.";
+    } else {
+      errorElement.textContent = "";
     }
+  }
 
-    connectedCallback() {
-        this.modal = new bootstrap.Modal(this._shadowRoot.getElementById('noteModal'));
-
-        this._shadowRoot.querySelector('#openModalBtn').addEventListener('click', () => {
-            this.modal.show();
-        });
-
-        this._shadowRoot.querySelector('#noteForm').addEventListener('submit', this._onSubmit.bind(this));
-
-        const titleInput = this._shadowRoot.getElementById('noteTitle');
-        const bodyInput = this._shadowRoot.getElementById('noteBody');
-
-        titleInput.addEventListener('input', this._validateInput.bind(this, titleInput));
-        bodyInput.addEventListener('input', this._validateInput.bind(this, bodyInput));
-    }
-
-    disconnectedCallback() {
-        this._shadowRoot.querySelector('#openModalBtn').removeEventListener('click', () => {
-            this.modal.show();
-        });
-        this._shadowRoot.querySelector('#noteForm').removeEventListener('submit', this._onSubmit.bind(this));
-    }
-
-    _onSubmit(event) {
-        event.preventDefault();
-
-        const formData = new FormData(event.target);
-        const title = formData.get('title');
-        const body = formData.get('body');
-
-        this.dispatchEvent(new CustomEvent('note-added', {
-            detail: { title, body },
-            bubbles: true,
-            composed: true
-        }));
-
-        event.target.reset();
-        this.modal.hide();
-    }
-
-    _validateInput(inputElement) {
-        const value = inputElement.value.trim();
-        const errorElement = inputElement.nextElementSibling;
-
-        if (value === '') {
-            errorElement.textContent = 'This field is required.';
-        } else {
-            errorElement.textContent = '';
-        }
-    }
-
-    render() {
-        this._shadowRoot.innerHTML = `
+  render() {
+    this._shadowRoot.innerHTML = `
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
             <button type="button" class="btn btn-primary mb-3" id="openModalBtn">Add Note</button>
             <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
@@ -93,7 +111,7 @@ class NoteModal extends HTMLElement {
                 </div>
             </div>
         `;
-    }
+  }
 }
 
-customElements.define('note-modal', NoteModal);
+customElements.define("note-modal", NoteModal);
