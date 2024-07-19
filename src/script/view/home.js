@@ -3,9 +3,25 @@ import Notes from "../data/notes.js";
 
 const home = () => {
   const baseUrl = "https://notes-api.dicoding.dev/v2/notes";
+
+  const loadingElement = document.querySelector(".search-loading");
   const searchFormElement = document.querySelector("search-bar");
   const noteListContainerElement = document.querySelector(".card-list");
   const noteModalElement = document.querySelector("note-modal");
+
+  const setLoading = (value) => {
+    if (value == true) {
+      loadingElement.style.display = "block";
+      searchFormElement.style.display = "none";
+      noteListContainerElement.style.display = "none";
+      noteModalElement.style.display = "none";
+    } else {
+      loadingElement.style.display = "none";
+      searchFormElement.style.display = "block";
+      noteListContainerElement.style.display = "grid";
+      noteModalElement.style.display = "block";
+    }
+  };
 
   const showCard = (query) => {
     const result = Notes.searchNote(query);
@@ -43,6 +59,7 @@ const home = () => {
   };
 
   async function getNotes() {
+    setLoading(true);
     try {
       let response = await fetch(baseUrl);
       let responseJson = await response.json();
@@ -63,9 +80,11 @@ const home = () => {
     } catch (error) {
       alert("Error: " + error);
     }
+    setLoading(false);
   }
 
   async function insertNote(note) {
+    setLoading(true);
     try {
       const options = {
         method: "POST",
@@ -81,10 +100,12 @@ const home = () => {
       getNotes();
     } catch (error) {
       alert("Error: " + error);
+      setLoading(false);
     }
   }
 
   async function deleteNote(id) {
+    setLoading(true);
     try {
       const deleteUrl = `${baseUrl}/${id}`;
 
@@ -98,6 +119,7 @@ const home = () => {
       getNotes();
     } catch (error) {
       alert("Error: " + error);
+      setLoading(false);
     }
   }
 

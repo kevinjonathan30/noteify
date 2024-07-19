@@ -38,7 +38,10 @@ class NoteifyCard extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = `
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <div class="card" style="border: 1px solid ${this.getRandomColor()};">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+        <script>new WOW().init();</script>
+        <div class="card wow animated fadeInUp" style="border: 1px solid ${this.getRandomColor()};">
             <div class="card-body">
                 <h5 class="card-title">${this._title || ""}</h5>
                 <p class="card-text">${this._body || ""}</p>

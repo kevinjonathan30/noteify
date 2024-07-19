@@ -20,14 +20,24 @@
     </header>
 
     <main class="container mt-3">
-      <!-- Search form -->
-      <search-bar></search-bar>
+      <div class="search-loading">
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <div class="content">
+        <!-- Search form -->
+        <search-bar></search-bar>
 
-      <!-- Note modal -->
-      <note-modal></note-modal>
+        <!-- Note modal -->
+        <note-modal></note-modal>
 
-      <!-- Card list -->
-      <div class="card-list"></div>
+        <!-- Card list -->
+        <div class="card-list"></div>
+      </div>
     </main>
 
     <script
